@@ -422,5 +422,3 @@ https://www.who.int/campaigns/world-drowning-prevention-day/2022
 [9]–[14] (Se mantienen exactamente como en el texto original)
 
 
-
-# 13. ANEXOS
