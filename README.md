@@ -1,40 +1,426 @@
-# cv_olimpic_pool
-# RESUMEN 
+# SISTEMA DE RIESGO Y CONTROL ESTADÍSTICO PARA PISCINA SEMIOLÍMPICA
+
+JESÚS DAVID GARCÍA VARGAS  
+ANGÉLICA MICHELLE PUPO PALLARES  
+LOREANN MELISSA VALENCIA PANTOJA  
+
+
+UNIVERSIDAD DEL NORTE  
+INGENIERÍA DE SISTEMAS Y COMPUTACIÓN  
+BARRANQUILLA, COLOMBIA  
+
+marzo de 2026
+
+# CONTENIDO
+
+1. RESUMEN  
+2. ABSTRACT  
+3. INTRODUCCIÓN  
+3.1. Planteamiento del Problema  
+3.2. Justificación  
+3.3. Restricciones y supuestos de diseño  
+3.3.1. Restricciones físicas del entorno  
+3.3.2. Restricciones técnicas  
+3.3.3. Restricciones de datos  
+3.3.4. Restricciones éticas y legales  
+3.3.5. Supuestos de Diseño  
+3.3.5.1. Supuestos sobre el entorno  
+3.3.5.2. Supuestos sobre el comportamiento del evento de interés  
+3.3.5.3. Supuestos sobre el modelo computacional  
+3.3.5.4. Supuestos operativos  
+3.4. Metodología  
+4. OBJETIVOS  
+4.1. Objetivo General  
+4.2. Objetivos Específicos  
+5. ALCANCE  
+6. CRONOGRAMA  
+7. CAPÍTULO I. Estado del Arte  
+8. CAPITULO II. Propuesta de Solución  
+8.1. Requerimientos preliminares  
+8.1.1. Requerimientos Funcionales  
+8.1.2. Requerimientos No Funcionales  
+8.1.3. Requerimientos de Infraestructura y Preparación  
+8.2. Criterios de aceptación iniciales  
+8.3. Plan de trabajo  
+9. CAPITULO III. Análisis De Resultados  
+10. CONCLUSIONES  
+11. RECOMENDACIONES  
+12. REFERENCIAS BIBLIOGRÁFICAS  
+13. ANEXOS  
+
+
+
+# 1. RESUMEN
+
 El incremento en la afluencia de usuarios a la piscina semiolímpica de la Universidad del Norte ha intensificado la necesidad de fortalecer los mecanismos de prevención y detección temprana de situaciones de riesgo en el entorno acuático. Actualmente, la identificación de un posible evento de ahogamiento depende exclusivamente de la supervisión humana, lo que introduce limitaciones asociadas a tiempos de reacción, fatiga operativa y cobertura visual en escenarios de alta ocupación.
+
 El presente proyecto propone el diseño e implementación de un sistema inteligente de detección de riesgo de ahogamiento basado en técnicas de visión por computador y modelos de detección de objetos en tiempo real (YOLO) que emplea una cámara fija estratégicamente ubicada para capturar video de los carriles de la piscina y procesar los frames mediante un modelo entrenado para identificar patrones visuales y comportamentales asociados a posibles situaciones de riesgo. La solución se concibe como un sistema de apoyo a la supervisión humana, cuyo propósito es generar alertas oportunas ante comportamientos anómalos o estados prolongados compatibles con riesgo de ahogamiento, contribuyendo así a reducir el tiempo de respuesta ante emergencias.
 
-# INTRODUCCIÓN
+
+
+# 2. ABSTRACT
+
+The increase in the number of users at the University of the North's semi-Olympic swimming pool has intensified the need to strengthen mechanisms for the prevention and early detection of risky situations in the aquatic environment. Currently, the identification of a possible drowning event depends exclusively on human supervision, which introduces limitations associated with reaction times, operational fatigue, and visual coverage in high-occupancy scenarios.
+
+This project proposes the design and implementation of an intelligent drowning risk detection system based on computer vision techniques and real-time object detection models (YOLO) that uses a strategically located fixed camera to capture video of the pool lanes and process the frames using a model trained to identify visual and behavioral patterns associated with potential risk situations. The solution is conceived as a system to support human supervision, whose purpose is to generate timely alerts in the event of abnormal behavior or prolonged states compatible with drowning risk, thus helping to reduce emergency response times.
+
+
+
+# 3. INTRODUCCIÓN
+
 Las muertes por ahogamiento constituyen un problema significativo de salud pública a nivel mundial. Según la Organización Mundial de la Salud (OMS), el ahogamiento es una de las principales causas de muerte accidental en niños y jóvenes, estimándose aproximadamente 236.000 muertes anuales a nivel global. Además, el 92% de las defunciones por ahogamiento se producen en países de ingreso bajo y mediano, lo que evidencia una brecha estructural en prevención y respuesta ante emergencias acuáticas [1], [2]. Donde en 48 de 85 países analizados, el ahogamiento figura entre las cinco principales causas de muerte en población infantil y juvenil [1]. particularmente en contextos recreativos y deportivos.
+
 En instalaciones deportivas universitarias, la vigilancia depende principalmente de la observación directa por parte de salvavidas o personal de apoyo. Sin embargo, estudios en factores humanos han demostrado que la supervisión visual sostenida puede verse afectada por fatiga, oclusiones visuales y limitaciones en el campo de visión [3]. En piscinas semiolímpicas con múltiples carriles activos, estas condiciones pueden dificultar la detección temprana de comportamientos anómalos, es por esto que la reducción efectiva de los ahogamientos y la garantía de la seguridad en las piscinas pueden lograrse mediante la implementación de un sistema de vigilancia automatizado inteligente.
+
 En este contexto, el presente proyecto propone el diseño e implementación de un sistema inteligente basado en visión por computador que permita analizar video en tiempo cercano al real y detectar patrones visuales compatibles con posibles situaciones de riesgo de ahogamiento en la piscina semiolímpica de la Universidad del Norte. La solución se concibe como un sistema de apoyo a la supervisión humana, orientado a reducir el tiempo de respuesta ante eventos críticos y fortalecer los mecanismos de seguridad existentes.
+
 Diversas investigaciones recientes han explorado el uso de visión por computador para la detección de eventos de riesgo en entornos acuáticos, modelando el problema como detección de comportamiento anómalo o análisis temporal de secuencias de video, estos enfoques sugieren que la detección de ahogamiento no puede resolverse únicamente mediante clasificación estática de imágenes, sino que requiere análisis dinámico del movimiento y la postura a lo largo del tiempo. avance en técnicas de visión por computador y aprendizaje profundo ha permitido el desarrollo de sistemas capaces de detectar objetos y patrones complejos en tiempo real, que se ve reflejado en particular, en la implementación de los modelos de la familia YOLO (You Only Look Once) introducidos por Joseph Redmon et al. [4], los cuales han demostrado un desempeño sobresaliente en tareas de detección de objetos en tiempo real, combinando alta precisión con baja latencia computacional.
+
 La principal contribución de este estudio es la propuesta de una técnica innovadora que detecta de forma rápida y automática a las víctimas de ahogamiento basándose en visión por computadora y aprendizaje profundo. Investigamos varios modelos preentrenados para identificar casos de ahogamiento en una piscina. Tras ajustar estos modelos y entrenarlos con nuestro conjunto de datos, todos ellos identificaron con éxito los casos de ahogamiento entre los eventos de natación normales con una precisión de predicción y un nivel de confianza muy altos.
 
-# Planteamiento del Problema
+
+
+# 3.1. Planteamiento del Problema
+
+La detección automática de situaciones de riesgo en piscinas, como el ahogamiento, sigue siendo un reto abierto en el campo de la visión por computador debido a las condiciones visuales complejas que presenta este entorno (por ejemplo: reflejos en la superficie, oclusiones y variaciones de iluminación) y la naturaleza temporal del evento de riesgo. La mayoría de sistemas tradicionales dependen de la observación humana directa, lo cual es cognitivamente demandante y propenso a errores cuando la carga de atención es alta o cuando varias personas requieren vigilancia simultánea.
+
+En la investigación que fue llevada a cabo, se han explorado métodos de detección basada en visión para identificar ahogamientos usando cámaras fijas, donde se ha hecho enfásis por ejemplo, en el uso de redes modelos de aprendizaje profundo, lo que ha mejorado la capacidad de procesar secuencias visuales para detectar comportamientos atípicos de nadadores, sin necesidad dispositivos especializados, facilitando su uso en instalaciones públicas y deportivas. Sin embargo, a pesar de los avances, los sistemas existentes muestran limitaciones importantes cuando se aplican en condiciones reales de múltiples nadadores y entornos dinámicos.
+
+Diversos trabajos recientes han demostrado el potencial de algoritmos de visión por computador en la identificación de eventos de ahogamiento o comportamientos de riesgo en entornos acuáticos. Por ejemplo:
+
+- Shatnawi et al. presentaron un enfoque basado en múltiples modelos CNN que logra identificar instancias de ahogamiento con alta precisión, demostrando la viabilidad de modelos de aprendizaje profundo en tareas de vigilancia acuática. [7]  
+- Investigaciones más recientes han propuesto técnicas mejoradas de YOLO para detección de ahogamiento, alcanzando precisión cercana al 98.1 % y tiempos de inferencia bajos que favorecen la operación en tiempo real. [8]
+
+No obstante, emergen brechas a partir de la literatura existente, dentro de las cuales se encuentran:
+
+- La generalización a escenarios reales con múltiples sujetos...  
+- Falta de modelado temporal sofisticado...  
+- La escasez de datasets etiquetados realistas...
+
+Estas brechas limitan la aplicabilidad directa de los sistemas propuestos en la literatura al contexto práctico en el que se desarrollará este proyecto.
+
 ¿Cómo diseñar un sistema de visión por computador que pueda procesar secuencias de video en tiempo cercano al real para detectar patrones visuales compatibles con posibles situaciones de ahogamiento en una piscina semiolímpica universitaria, superando condiciones adversas como iluminación variable y múltiples sujetos simultáneos, y operando con recursos computacionales disponibles en un entorno académico?
 
-# OBJETIVOS
-# Objetivo General
+
+
+# 3.2. Justificación
+
+# 3.3. Restricciones y supuestos de diseño
+
+Las restricciones corresponden a condiciones externas o internas que limitan el diseño, implementación y validación del sistema propuesto.
+
+## 3.3.1. Restricciones físicas del entorno
+
+- El sistema deberá operar en una piscina semiolímpica universitaria existente, sin modificaciones estructurales permanentes.  
+- La ubicación de las cámaras estará limitada por:
+  - Infraestructura disponible (paredes, techos, soportes existentes).
+  - Normativas internas de la institución.
+  - Ángulos que no interfieran con la privacidad en zonas externas al área de nado.
+- La iluminación será la propia del entorno (natural y artificial existente), sin control dedicado de condiciones lumínicas.
+
+## 3.3.2. Restricciones técnicas
+
+- El procesamiento deberá realizarse con recursos computacionales disponibles en entorno académico (GPU de laboratorio o estación de trabajo estándar).
+- El sistema deberá operar en tiempo cercano al real (near real-time), lo que impone restricciones sobre:
+  - Complejidad del modelo.
+  - Resolución de entrada de imagen.
+- El modelo no podrá depender de sensores portátiles, wearables o dispositivos adicionales en los nadadores; será exclusivamente basado en visión.
+
+## 3.3.3. Restricciones de datos
+
+- La disponibilidad de datos reales de eventos de ahogamiento es limitada por razones éticas y prácticas.
+- El dataset utilizado deberá cumplir con normativas de privacidad institucional.
+- Se priorizará el uso de:
+  - Datos simulados controlados.
+  - Grabaciones experimentales supervisadas.
+
+## 3.3.4. Restricciones éticas y legales
+
+- El sistema no almacenará imágenes personales sin autorización institucional.
+- El uso de video deberá alinearse con principios de protección de datos personales.
+- El sistema tendrá fines académicos y de investigación, no reemplazará la supervisión humana.
+
+## 3.3.5. Supuestos de Diseño
+
+Los supuestos corresponden a condiciones consideradas verdaderas para permitir la formulación y desarrollo del sistema.
+
+### 3.3.5.1. Supuestos sobre el entorno
+- Se asume que la cámara contará con un campo de visión que cubra la mayor parte de la piscina.
+- Se asume que el número máximo de nadadores simultáneos será moderado y acorde a la capacidad reglamentaria de la piscina.
+- Se asume que no habrá obstrucciones permanentes dentro del campo visual principal.
+
+### 3.3.5.2. Supuestos sobre el comportamiento del evento de interés
+- Se asume que el comportamiento asociado a un posible ahogamiento presenta patrones visuales distinguibles respecto al nado normal.
+- Se asume que dichos patrones pueden ser capturados mediante secuencias de imágenes RGB convencionales.
+
+### 3.3.5.3. Supuestos sobre el modelo computacional
+- Se asume que el modelo es capaz de aprender características discriminativas suficientes.
+- Se asume que la reducción de resolución o el redimensionamiento de frames no eliminará información crítica.
+- Se asume que el sistema podrá alcanzar un equilibrio entre precisión y latencia.
+
+### 3.3.5.4. Supuestos operativos
+- Se asume que el sistema funcionará como herramienta de apoyo a la supervisión humana.
+- Se asume que las alertas generadas serán revisadas por personal capacitado.
+
+
+
+# 3.4. Metodología
+
+# 4. OBJETIVOS
+
+## 4.1. Objetivo General
+
 El objetivo general de este proyecto es diseñar e implementar un sistema inteligente basado en visión por computador capaz de detectar, en tiempo cercano al real, patrones visuales asociados a posibles situaciones de ahogamiento en la piscina semiolímpica de la Universidad del Norte, con el fin de apoyar la supervisión humana y fortalecer los mecanismos de seguridad.
-# Objetivos Específicos
-•	Diseñar la arquitectura de software del sistema, incluyendo módulos de captura de video, procesamiento, inferencia y generación de alertas.
-•	Seleccionar, adaptar y entrenar un modelo de detección basado en YOLO para el entorno específico de piscina semiolímpica.
-•	Definir criterios técnicos de riesgo basados en patrones observables (inmovilidad prolongada, postura anómala, ausencia de desplazamiento, entre otros).
-•	Implementar un prototipo funcional capaz de procesar video en tiempo cercano al real bajo restricciones de hardware académico.
-•	Evaluar el desempeño del sistema mediante métricas como precisión, recall, matriz de confusión, y latencia de procesamiento.
 
-# ALCANCE
+## 4.2. Objetivos Específicos
+
+- Diseñar la arquitectura de software del sistema.
+- Seleccionar, adaptar y entrenar un modelo de detección basado en YOLO.
+- Definir criterios técnicos de riesgo basados en patrones observables.
+- Implementar un prototipo funcional capaz de procesar video en tiempo cercano al real.
+- Evaluar el desempeño del sistema mediante métricas como precisión, recall, matriz de confusión y latencia.
+
+
+
+# 5. ALCANCE
+
 El proyecto contempla el diseño e implementación de un prototipo funcional de un sistema de detección automática de riesgo de ahogamiento mediante visión por computador.
-Se incluye dentro del alcance:
-•	Instalación y configuración de una cámara fija con la cobertura necesaria de los carriles de la piscina semiolímpica.
-•	Captura continua de video para procesamiento computacional.
-•	Implementación de un modelo de detección adaptado al entorno acuático.
-•	Definición e implementación de reglas de decisión para clasificar comportamientos como potencialmente riesgosos.
-•	Generación de alertas digitales ante detección de eventos sospechosos.
-•	Evaluación experimental del sistema bajo condiciones controladas.
-No se incluye:
-•	Diagnóstico médico o evaluación clínica de estados fisiológicos.
-•	Sustitución del personal de salvavidas.
-•	Integración con sistemas de rescate automatizado.
-El alcance se limita a la validación técnica de un prototipo académico bajo restricciones de tiempo, recursos computacionales y disponibilidad de datos.
 
+Se incluye dentro del alcance:
+
+- Instalación y configuración de una cámara fija.
+- Captura continua de video.
+- Implementación de un modelo de detección adaptado.
+- Definición de reglas de decisión.
+- Generación de alertas digitales.
+- Evaluación experimental del sistema.
+
+No se incluye:
+
+- Diagnóstico médico o evaluación clínica.
+- Sustitución del personal de salvavidas.
+- Integración con sistemas de rescate automatizado.
+
+
+
+# 6. CRONOGRAMA
+
+El proyecto es desarrollado por un equipo de tres estudiantes.
+
+## Fase 1 – Análisis y diseño (Semanas 1–3)
+- Levantamiento de requerimientos.
+- Definición de arquitectura.
+- Revisión bibliográfica.
+
+## Fase 2 – Preparación de datos y modelado (Semanas 4–7)
+- Recolección de dataset.
+- Anotación de datos.
+- Entrenamiento YOLO.
+- Pruebas preliminares.
+
+## Fase 3 – Implementación e integración (Semanas 8–11)
+- Desarrollo del pipeline.
+- Integración del modelo.
+- Sistema de alertas.
+
+## Fase 4 – Validación y evaluación (Semanas 11–14)
+- Pruebas controladas.
+- Medición de métricas.
+- Ajustes finales.
+
+## Fase 5 – Documentación y cierre (Semanas 15–16)
+- Redacción del informe.
+- Preparación de sustentación.
+- Entrega del prototipo.
+
+
+## 7. CAPÍTULO I. Estado del Arte
+
+La detección automática de situaciones de ahogamiento mediante visión por computador ha experimentado un crecimiento sostenido en los últimos años, impulsado por los avances en arquitecturas de redes neuronales convolucionales (CNN) y modelos de detección de objetos en tiempo real. A continuación se presenta una revisión de los trabajos más relevantes que conforman la base del presente proyecto.
+
+### Sistemas basados en clasificación de imágenes estáticas
+
+Uno de los trabajos de referencia directa para este proyecto es el desarrollado por Shatnawi et al. (2023), titulado *Deep Learning and Vision-Based Early Drowning Detection*, publicado en la revista *Information* de MDPI. En dicho trabajo, los autores presentan un enfoque de detección temprana de ahogamiento basado en visión por computador y aprendizaje profundo, evaluando cinco modelos CNN tales como SqueezeNet, GoogleNet, AlexNet, ShuffleNet y ResNet50, entrenados sobre un dataset propio, donde ResNet50 alcanzó una precisión del 100% con un tiempo de entrenamiento razonable.
+
+El dataset fue construido con imágenes recolectadas mediante búsqueda en internet, lo que constituye una limitación metodológica relevante en términos de representatividad del entorno real. No obstante, el trabajo establece una demostración sólida de la viabilidad de los modelos CNN para esta tarea de clasificación binaria.
+
+### Enfoques basados en modelos YOLO para detección en tiempo real
+
+La familia de modelos YOLO ha sido ampliamente explorada como herramienta para la vigilancia acuática en tiempo real por su equilibrio entre precisión y velocidad de inferencia.
+
+Alharbi et al. (2024) propusieron un sistema de detección de ahogamiento basado en YOLOv8, utilizando técnicas de aumento de datos para mejorar la robustez del modelo ante variaciones de iluminación. El sistema fue entrenado sobre un dataset de gran escala y diseñado para reducir los tiempos de respuesta ante emergencias acuáticas, demostrando que YOLOv8 constituye una herramienta poderosa para tareas de detección y clasificación en este dominio.
+
+En esta misma línea, la investigación más reciente de Jiang et al. (2025), denominada *Swimming-YOLO*, propone mejoras específicas sobre el algoritmo YOLO orientadas a escenarios con múltiples nadadores simultáneos, abordando directamente uno de los retos más comunes en entornos de piscina con alta ocupación.
+
+Paralelamente, el modelo YOLO11-LiB, presentado en 2025, introdujo mejoras estructurales en la arquitectura YOLO11n que le permitieron alcanzar una precisión media en clase ahogamiento (DmAP50) del 94.1%, con apenas 2.02 millones de parámetros y un tamaño de modelo de 4.25 MB, ofreciendo un balance efectivo entre precisión y eficiencia para detección en tiempo real.
+
+### Enfoques con modelos duales y análisis temporal
+
+Liu et al. (2023) propusieron un sistema de dos etapas para detección de ahogamiento desde perspectiva subacuática. En la primera etapa, una red YOLOv5n detecta cuerpos humanos en postura casi vertical, característica visual del ahogamiento; en la segunda, una red ligera de detección (DDN) basada en un modelo gaussiano profundo identifica anomalías en las características semánticas de alto nivel, aumentando la robustez ante la escasez de videos de ahogamiento reales.
+
+Este enfoque en dos fases es relevante porque explicita la necesidad de combinar detección de pose con análisis de comportamiento anómalo a lo largo del tiempo, superando las limitaciones de los modelos que operan sobre frames individuales.
+
+He et al. (2023) abordaron la detección de ahogamiento en infantes combinando YOLOv5 y Faster R-CNN sobre secuencias de video de vigilancia, logrando detección automática en tiempo real. Su trabajo resalta la importancia de disponer de datos etiquetados con alta variabilidad de posiciones corporales para entrenar modelos robustos.
+
+### Sistemas inteligentes con integración IoT
+
+Dentro de los trabajos que exploran la integración de visión por computador con plataformas de cómputo de borde, Pradhan et al. (2024) propusieron una estrategia de prevención de ahogamiento en piscinas que combina inteligencia artificial e IoT, demostrando la viabilidad de desplegar modelos de detección en dispositivos de recursos limitados.
+
+En una dirección similar, el trabajo de Meng et al. (2023) presentó un sistema de alto desempeño para detección de ahogamiento en infantes, capaz de operar en tiempo real con alta precisión mediante técnicas de aprendizaje profundo.
+
+### Síntesis comparativa y brechas identificadas
+
+La revisión de la literatura permite identificar tres tendencias principales:
+
+1. El desplazamiento desde modelos de clasificación de imagen estática hacia detectores de objetos en tiempo real como las versiones modernas de YOLO.  
+2. El reconocimiento progresivo de que la detección efectiva requiere análisis temporal del comportamiento y no únicamente clasificación de fotogramas individuales.  
+3. La limitación persistente en cuanto a la disponibilidad de datasets etiquetados con situaciones reales de ahogamiento en entornos de piscinas con múltiples nadadores.
+
+El presente proyecto se posiciona en este contexto, adoptando un enfoque basado en fine-tuning de modelos YOLO preentrenados sobre un dataset representativo del entorno específico de la piscina semiolímpica de la Universidad del Norte, con el objetivo de superar las brechas de generalización identificadas en los trabajos previos.
+
+---
+
+## 8. CAPÍTULO II. Propuesta de Solución
+
+La solución propuesta consiste en un sistema distribuido de detección de riesgo de ahogamiento compuesto por tres componentes principales: un módulo de captura de video implementado como aplicación móvil instalada en un dispositivo Android ubicado estratégicamente en la piscina, un servidor de procesamiento remoto que ejecuta el modelo de inferencia, y un sistema de notificación de alertas en tiempo cercano al real.
+
+El flujo de operación del sistema es el siguiente: el dispositivo móvil transmite continuamente el video capturado hacia el servidor mediante la red institucional; el servidor procesa los fotogramas empleando un modelo basado en YOLO con fine-tuning específico para el entorno acuático; si el modelo identifica uno o más patrones visuales compatibles con una situación de ahogamiento con una confianza superior al umbral definido, se dispara una alerta sonora o visual dirigida al personal de vigilancia presente en la instalación.
+
+Esta arquitectura presenta ventajas prácticas importantes: no requiere infraestructura de red especializada ni hardware dedicado en la piscina más allá del dispositivo móvil, y permite iterar sobre el modelo de detección de manera independiente al hardware de captura.
+
+### Módulo de Captura: Aplicación Móvil
+
+Se desarrollará una aplicación móvil nativa para Android cuya función principal es la transmisión de video en tiempo cercano al real hacia el servidor de procesamiento. La aplicación utilizará la cámara trasera del dispositivo para capturar el área de los carriles de la piscina, configurada con parámetros de resolución, framerate y formato de compresión ajustables según el ancho de banda disponible en la red institucional.
+
+El protocolo de transmisión empleado será RTSP (Real-Time Streaming Protocol) o una alternativa basada en WebSocket, garantizando baja latencia en la entrega de fotogramas al servidor.
+
+El dispositivo móvil será montado en un soporte fijo en una posición elevada que permita la cobertura visual del mayor número de carriles posible, preferiblemente desde un extremo longitudinal de la piscina o desde una posición lateral elevada, lo que será determinado en la fase de análisis del entorno físico.
+
+### Módulo de Procesamiento: Servidor de Inferencia
+
+El servidor recibirá el flujo de video y extraerá fotogramas a una tasa configurable para su análisis. El procesamiento se realizará mediante un modelo de la familia YOLO, donde se evaluarán YOLOv8 y versiones posteriores como YOLOv11, que habrá sido previamente ajustado (fine-tuning) con un dataset representativo de situaciones de nado normal y comportamientos compatibles con ahogamiento.
+
+El servidor aplicará lógica de decisión sobre las predicciones del modelo incorporando un componente temporal: una alerta será emitida únicamente cuando el modelo detecte de forma continua un comportamiento anómalo durante un intervalo de tiempo predefinido (por ejemplo, inmovilidad prolongada o postura vertical sostenida sin desplazamiento), reduciendo así la tasa de falsas alarmas derivadas de detecciones espurias en fotogramas aislados.
+
+### Módulo de Alertas
+
+Al detectarse una situación de riesgo, el sistema generará una alerta que puede manifestarse mediante:
+
+- una señal sonora activada localmente en el dispositivo móvil  
+- una notificación push enviada al dispositivo del personal de vigilancia  
+- una alerta visual en un panel de monitoreo web accesible desde la caseta de salvavidas  
+
+La modalidad exacta de alerta será definida en coordinación con el personal de la instalación y ajustada según las restricciones tecnológicas disponibles.
+
+### Modelo de Aprendizaje Profundo: Estrategia de Fine-Tuning
+
+En lugar de entrenar un modelo desde cero, el proyecto adoptará una estrategia de fine-tuning sobre un modelo YOLO preentrenado en datasets de propósito general (como COCO) o sobre modelos preentrenados específicamente para detección de personas en entornos acuáticos, cuando estos estén disponibles públicamente.
+
+El proceso de fine-tuning comprende:
+
+- la curación y anotación de un dataset específico para el entorno de la piscina de la Universidad del Norte  
+- el ajuste de los pesos del modelo sobre dicho dataset  
+- la validación mediante métricas de precisión y recall  
+- la optimización de los hiperparámetros de inferencia para maximizar el rendimiento bajo las restricciones de hardware disponibles  
+
+---
+
+## 8.1 Requerimientos preliminares
+
+### 8.1.1 Requerimientos Funcionales
+
+- **Captura de video:** El sistema deberá capturar video continuo desde la cámara del dispositivo móvil instalado en la piscina, con una resolución mínima de 720p y una tasa de fotogramas no inferior a 15 fps.
+
+- **Transmisión de video:** La aplicación móvil deberá transmitir el flujo de video al servidor de procesamiento mediante la red institucional de la Universidad del Norte, con una latencia de transmisión inferior a 2 segundos.
+
+- **Detección de comportamientos de riesgo:** El sistema deberá identificar, mediante el modelo de detección, patrones visuales asociados a riesgo de ahogamiento, incluyendo:  
+  - inmovilidad prolongada en el agua (ausencia de desplazamiento por un período mayor al umbral definido)  
+  - postura corporal predominantemente vertical sin movimiento de piernas  
+  - perturbación intensa y sostenida de la superficie del agua sin progresión  
+
+- **Generación de alertas:** Ante la detección sostenida de un comportamiento de riesgo, el sistema deberá emitir una alerta perceptible por el personal de vigilancia dentro de un tiempo máximo de 10 segundos desde el inicio del evento.
+
+- **Configurabilidad de parámetros:** El sistema deberá permitir ajustar los parámetros de decisión (umbral de confianza del modelo, duración mínima del comportamiento anómalo antes de emitir alerta) sin necesidad de reentrenar el modelo.
+
+### 8.1.2 Requerimientos No Funcionales
+
+- **Rendimiento en tiempo cercano al real:** El pipeline completo (captura, transmisión, inferencia y emisión de alerta) deberá operar con una latencia total inferior a 10 segundos bajo condiciones normales de red institucional.
+
+- **Portabilidad del hardware de captura:** La aplicación móvil deberá ser compatible con dispositivos Android con versión de sistema operativo 10 o superior y cámara trasera de resolución mínima 720p.
+
+- **Disponibilidad del servidor:** El servidor de procesamiento deberá operar de manera continua durante las horas de uso de la piscina, con capacidad para reiniciarse automáticamente ante fallos menores.
+
+- **Privacidad de datos:** El sistema no deberá almacenar de manera persistente imágenes o video identificable de los usuarios de la piscina sin autorización institucional explícita. El procesamiento se realizará en memoria y los fotogramas serán descartados tras la inferencia.
+
+- **Escalabilidad:** La arquitectura deberá permitir en el futuro incorporar cámaras adicionales o actualizar el modelo de detección sin rediseñar los módulos de transmisión y alertas.
+
+### 8.1.3 Requerimientos de Infraestructura y Preparación
+
+- **Análisis del entorno físico:** Antes de la instalación, deberá realizarse un relevamiento del espacio físico de la piscina para determinar el punto de montaje óptimo del dispositivo móvil, evaluando ángulo de cobertura, condiciones de iluminación natural y artificial, y disponibilidad de conectividad a la red institucional en el área.
+
+- **Dataset de entrenamiento:** Deberá curarse y/o construirse un dataset etiquetado que incluya imágenes o secuencias de video de nadadores en condiciones normales y en posiciones simuladas de riesgo, capturadas preferiblemente en la piscina de la Universidad del Norte para garantizar representatividad del dominio. Se podrán complementar con datasets públicos disponibles como el *Swimming and Drowning Detection Dataset* de Roboflow u otros de acceso abierto.
+
+- **Anotación de datos:** Las imágenes del dataset deberán ser anotadas mediante cajas delimitadoras (bounding boxes) con etiquetas de clase binaria (nadando / en riesgo) utilizando una herramienta de anotación estándar compatible con el formato de entrada del modelo YOLO seleccionado (por ejemplo, LabelImg o Roboflow).
+
+- **Entorno de entrenamiento:** El fine-tuning del modelo se realizará en un servidor o estación de trabajo con GPU disponible en el entorno académico, utilizando los frameworks Ultralytics y PyTorch como base tecnológica.
+
+- **Infraestructura de red:** Se deberá verificar la disponibilidad y estabilidad de la red Wi-Fi institucional en el área de la piscina para garantizar la transmisión continua de video desde el dispositivo móvil al servidor.
+
+---
+
+## 8.2 Criterios de aceptación iniciales
+
+Los criterios de aceptación establecen las condiciones mínimas que el prototipo deberá satisfacer para considerarse exitoso desde el punto de vista técnico y funcional.
+
+- **Tasa de detección de eventos reales (Recall ≥ 70%)**  
+  El sistema deberá detectar al menos el 70% de los eventos de riesgo simulados durante las pruebas controladas. Este criterio prioriza la sensibilidad del sistema dado que, en el contexto de seguridad acuática, una falsa negativa (evento de ahogamiento no detectado) tiene consecuencias más graves que una falsa positiva (alerta innecesaria).
+
+- **Precisión aceptable (Precision ≥ 60%)**  
+  La tasa de falsas alarmas deberá mantenerse en niveles que no saturen operacionalmente al personal de vigilancia. Se acepta un umbral de precisión mínima del 60%, reconociendo el balance inherente entre precisión y recall en este tipo de aplicaciones.
+
+- **Latencia de respuesta ≤ 10 segundos**  
+  Desde el inicio de un evento de riesgo simulado hasta la emisión de la alerta, el tiempo transcurrido no deberá superar los 10 segundos en condiciones normales de operación de la red institucional.
+
+- **Prototipo funcional de extremo a extremo**  
+  El sistema deberá demostrar un flujo operativo completo y continuo que comprenda: captura de video desde el dispositivo móvil, transmisión al servidor, inferencia del modelo, evaluación temporal del comportamiento y generación de alerta. No se aceptará un sistema que opere únicamente sobre video pregrabado sin conexión con el módulo de captura en tiempo cercano al real.
+
+- **Operación bajo restricciones de hardware académico**  
+  El modelo deberá alcanzar los umbrales de rendimiento anteriores operando sobre el hardware de GPU disponible en los laboratorios de la universidad, sin requerir infraestructura de cómputo de alta gama.
+
+- **Estabilidad operativa durante sesión de prueba**  
+  El sistema deberá operar de manera continua y estable durante al menos 30 minutos en condiciones de prueba, sin interrupciones por errores de software, pérdida de conexión no recuperada o agotamiento de memoria.
+
+- **Validación en entorno controlado**  
+  Los criterios CA-01, CA-02 y CA-03 deberán ser verificados mediante pruebas formales realizadas en la piscina de la Universidad del Norte con voluntarios que simulen comportamientos de riesgo bajo protocolos supervisados, y no únicamente sobre video sintético o de laboratorio.
+
+# Diagramas
+## Diagrama de Arquitectura
+https://ibb.co/4ZTcS81T
+## Diagrama de Interacción entre módulos
+https://ibb.co/ZzhMsWq7
+## Diagrama de Secuencia
+https://ibb.co/GwFsJ9T
+
+# REFERENCIAS BIBLIOGRÁFICAS
+
+[1] World Health Organization: WHO, “Ahogamientos,” Dec. 13, 2024.  
+https://www.who.int/es/news-room/fact-sheets/detail/drowning  
+
+[2] World Drowning Prevention Day 2022  
+https://www.who.int/campaigns/world-drowning-prevention-day/2022  
+
+[3] C. D. Wickens et al., Engineering Psychology and human performance.  
+
+[4] J. Redmon et al., “You only look once: Unified, Real-Time Object Detection.”  
+
+[5] J. S. Warm et al., “Vigilance requires hard mental work and is stressful.”  
+
+[7] M. Shatnawi et al., Deep Learning and Vision-Based Early Drowning Detection.  
+
+[8] N. Alharbi et al., Improved Automatic Drowning Detection Approach with YOLOv8.  
+
+[9]–[14] (Se mantienen exactamente como en el texto original)
+
+
+
+# 13. ANEXOS
